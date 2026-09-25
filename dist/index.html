@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Vaakku — Tamil Nadu Promise Tracker</title>
-  <meta name="description" content="A sourced prototype tracking 20 manifesto promises each from the 2016 AIADMK and 2021 DMK governments.">
+  <meta name="description" content="A sourced prototype tracking 100 manifesto promises each from the 2016 AIADMK and 2021 DMK governments.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2311151c'/%3E%3Cpath d='M15 32l11 11 23-25' fill='none' stroke='%23f2c94c' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
   <style>
     :root {
@@ -122,6 +122,7 @@
     .status.done { color: var(--done); }
     .status.partial { color: var(--partial); }
     .status.not { color: var(--not); }
+    .status.unverified { color: #596573; }
     .empty { display: none; padding: 30px; border: 1px dashed #aaa398; text-align: center; color: var(--muted); }
 
     .methodology { display: grid; grid-template-columns: .75fr 1.25fr; gap: 34px; margin-top: 52px; padding-top: 28px; border-top: 2px solid var(--ink); }
@@ -156,7 +157,7 @@
   <header>
     <div class="shell masthead">
       <div class="brand"><strong>VAAKKU</strong><span>வாக்கு · promise</span></div>
-      <div class="cutoff">Prototype · 20 promises per government<br>Evidence reviewed 25 Sep 2026</div>
+      <div class="cutoff">Prototype · 100 promises per government<br>End-of-term evidence review</div>
     </div>
   </header>
 
@@ -166,30 +167,30 @@
         <p class="eyebrow">Tamil Nadu manifesto delivery</p>
         <h1 id="page-title">What was promised. What was finished.</h1>
       </div>
-      <p class="lede">A source-linked prototype comparing 20 prominent commitments from the AIADMK government elected in 2016 and the DMK government elected in 2021.</p>
+      <p class="lede">A source-linked prototype comparing 100 commitments each from the AIADMK government elected in 2016 and the DMK government elected in 2021.</p>
     </section>
 
     <section class="score-grid" aria-label="Government completion comparison">
       <article class="score-card" data-gov="aiadmk">
         <div class="score-top">
-          <div><p class="party">AIADMK</p><p class="term">2016 manifesto · EPS-led government from 2017</p></div>
+          <div><p class="party">AIADMK</p><p class="term">2016 manifesto · assessed at the 2021 term end</p></div>
           <span class="tag">End-term review</span>
         </div>
-        <div class="score">45<small>%</small></div>
-        <div class="score-label">9 of 20 fully completed</div>
-        <div class="meter" aria-label="45 percent complete"><span style="--score:45%"></span></div>
-        <div class="tally"><span><b>9</b> completed</span><span><b>2</b> partial</span><span><b>9</b> not completed</span></div>
+        <div class="score" id="aiadmkScore">—</div>
+        <div class="score-label" id="aiadmkScoreLabel"></div>
+        <div class="meter"><span id="aiadmkMeter"></span></div>
+        <div class="tally" id="aiadmkTally"></div>
       </article>
 
       <article class="score-card" data-gov="dmk">
         <div class="score-top">
-          <div><p class="party">DMK</p><p class="term">2021 manifesto · status at evidence cutoff</p></div>
-          <span class="tag">Current term</span>
+          <div><p class="party">DMK</p><p class="term">2021 manifesto · assessed at the April 2026 term end</p></div>
+          <span class="tag">End-term review</span>
         </div>
-        <div class="score">15<small>%</small></div>
-        <div class="score-label">3 of 20 fully completed</div>
-        <div class="meter" aria-label="15 percent complete"><span style="--score:15%"></span></div>
-        <div class="tally"><span><b>3</b> completed</span><span><b>9</b> partial</span><span><b>8</b> not completed / unverified</span></div>
+        <div class="score" id="dmkScore">—</div>
+        <div class="score-label" id="dmkScoreLabel"></div>
+        <div class="meter"><span id="dmkMeter"></span></div>
+        <div class="tally" id="dmkTally"></div>
       </article>
     </section>
 
@@ -200,7 +201,7 @@
 
     <section class="tracker" aria-labelledby="tracker-title">
       <div class="tracker-head">
-        <div><h2 id="tracker-title">The 40-point ledger</h2><p id="resultCount" aria-live="polite">Showing all 40 promises</p></div>
+        <div><h2 id="tracker-title">The 200-point ledger</h2><p id="resultCount" aria-live="polite">Showing all 200 promises</p></div>
         <div class="filters" aria-label="Filter promises">
           <input class="control" id="search" type="search" placeholder="Search promises" aria-label="Search promises">
           <select class="control" id="government" aria-label="Filter by government">
@@ -213,6 +214,7 @@
             <option value="done">Completed</option>
             <option value="partial">Partial</option>
             <option value="not">Not completed</option>
+            <option value="unverified">Unverified</option>
           </select>
         </div>
       </div>
@@ -224,10 +226,10 @@
       <div><p class="eyebrow">How to read this</p><h2 id="method-title">Prototype, not a final audit</h2></div>
       <div>
         <ul>
-          <li>The sample contains 20 prominent commitments from each manifesto. It is curated, not random, so the percentages describe this sample only.</li>
+          <li>The sample contains 100 commitments from each manifesto. It is curated rather than random, so the percentages describe this 200-point sample only.</li>
           <li><strong>Completed</strong> means the promised outcome was delivered at the stated or substantially equivalent scope. <strong>Partial</strong> means action occurred but the outcome, scale or wording changed. <strong>Not completed</strong> includes promises with no verified delivery by the cutoff.</li>
-          <li>AIADMK is assessed at the end of its 2016–2021 term. DMK is assessed against evidence available on 25 September 2026. Each row links to its principal evidence; government claims are treated as claims unless independently corroborated.</li>
-          <li>The next production step should audit every manifesto promise with two reviewers, archived primary documents, a dated change log and a public correction process.</li>
+          <li>AIADMK is assessed at the end of its 2016–2021 term. DMK is assessed at the end of its May 2021–April 2026 term. Each row links to its principal evidence; party or government claims remain labelled as such unless independently corroborated.</li>
+          <li>The next production step should cover every promise in both manifestos with two reviewers, archived primary documents, a dated change log and a public correction process.</li>
         </ul>
       </div>
     </section>
@@ -235,52 +237,18 @@
 
   <footer class="shell">Vaakku prototype · Neutral civic record · No party affiliation</footer>
 
+  <script src="aiadmk-data.js"></script>
+  <script src="dmk-data.js"></script>
   <script>
-    const promises = [
-      {gov:'aiadmk',title:'Remove the legal bar on jallikattu',category:'Culture',status:'done',detail:'State legislation enabled the sport to resume after the Supreme Court ban.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Create a Tamil Chair at Harvard University',category:'Education',status:'done',detail:'The chair was established with funding from the Tamil Nadu government and donors.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Waive cooperative crop loans',category:'Agriculture',status:'done',detail:'Crop loans through cooperative institutions were waived during the term.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Disburse ₹40,000 crore in crop loans over five years',category:'Agriculture',status:'done',detail:'Reported disbursement reached about ₹42,600 crore by February 2021.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Provide the first 100 electricity units free to homes',category:'Energy',status:'done',detail:'The bimonthly domestic subsidy was implemented.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Increase free power for handloom and powerloom weavers',category:'Energy',status:'done',detail:'The bimonthly limits were raised to 200 and 750 units respectively.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Distribute free set-top boxes through Arasu Cable',category:'Digital',status:'done',detail:'The government reported distributing 35.2 lakh standard-definition boxes from 2017.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Rationalise land guideline values',category:'Revenue',status:'done',detail:'Guideline values were reduced by 33% in June 2017.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Open five new government medical colleges',category:'Health',status:'done',detail:'Eleven colleges were opened or sanctioned, exceeding the stated number.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Execute the Athikadavu–Avinashi water project',category:'Water',status:'partial',detail:'Foundation work began in 2019, but the project was not complete by the term end.',source:'The News Minute review',url:'https://www.thenewsminute.com/tamil-nadu/tnm-status-check-aiadmk-s-2016-promises-water-and-infrastructure-145089'},
-      {gov:'aiadmk',title:'Hold a Global Investors Meet every two years',category:'Industry',status:'partial',detail:'One meet was held during the five-year period, short of the promised frequency.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Give mobile phones to ration-card holders',category:'Digital',status:'not',detail:'No statewide distribution was completed during the term.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Introduce phased prohibition',category:'Public health',status:'not',detail:'The promised phased closure of liquor retail was not completed.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Restore the old pension scheme for government staff',category:'Government staff',status:'not',detail:'A committee submitted a report, but the old scheme was not restored.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Issue Pongal Co-optex gift coupons to ration-card holders',category:'Welfare',status:'not',detail:'The proposal was abandoned after disagreement over how it would operate.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Provide free Wi-Fi in public places',category:'Digital',status:'not',detail:'No broad public Wi-Fi programme matching the commitment was completed.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Establish an Ambedkar Foundation',category:'Social justice',status:'not',detail:'The promised foundation was listed among unfulfilled commitments at term end.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Launch Amma banking cards',category:'Finance',status:'not',detail:'Consultation occurred, but the card programme did not progress to delivery.',source:'The Hindu status review',url:'https://www.inkl.com/news/aiadmk-2016-manifesto-check-a-mixed-bag'},
-      {gov:'aiadmk',title:'Build an elevated highway from Meenambakkam to Chengalpattu',category:'Transport',status:'not',detail:'The corridor remained in limbo at the end of the term.',source:'The News Minute review',url:'https://www.thenewsminute.com/tamil-nadu/tnm-status-check-aiadmk-s-2016-promises-water-and-infrastructure-145089'},
-      {gov:'aiadmk',title:'Raise the Mullaperiyar dam level to 152 feet',category:'Water',status:'not',detail:'The level remained at 142 feet amid the unresolved inter-state dispute.',source:'The News Minute review',url:'https://www.thenewsminute.com/tamil-nadu/tnm-status-check-aiadmk-s-2016-promises-water-and-infrastructure-145089'},
+    const promises = [...window.AIADMK_PROMISES, ...window.DMK_PROMISES];
 
-      {gov:'dmk',title:'Secure a Tamil Nadu exemption from NEET',category:'Education',status:'partial',detail:'A state bill was passed and litigation pursued, but the promised exemption was not secured.',source:'The South First',url:'https://thesouthfirst.com/tamilnadu/tamil-nadu-knocks-sc-door-against-presidents-refusal-to-approve-neet-exemption-bill/'},
-      {gov:'dmk',title:'Provide free town-bus travel for women',category:'Women',status:'done',detail:'The Vidiyal Payanam zero-ticket scheme began in May 2021 and continues statewide.',source:'DMK scorecard evidence',url:'https://ssriramhere.github.io/dmk-scorecard/'},
-      {gov:'dmk',title:'Pay eligible women ₹1,000 every month',category:'Women',status:'done',detail:'Kalaignar Magalir Urimai launched in September 2023 with large-scale direct transfers.',source:'Official scheme portal',url:'https://kmut.tn.gov.in/'},
-      {gov:'dmk',title:'Create 10 lakh jobs a year and establish STEP',category:'Jobs',status:'partial',detail:'Large skilling and investment programmes launched, but 50 lakh realised jobs are not independently established.',source:'Naan Mudhalvan',url:'https://www.naanmudhalvan.tn.gov.in/'},
-      {gov:'dmk',title:'Open Kalaignar Canteens in 500 locations',category:'Urban welfare',status:'not',detail:'The promised network of 500 distinct canteens was not established.',source:'DMK scorecard evidence',url:'https://ssriramhere.github.io/dmk-scorecard/'},
-      {gov:'dmk',title:'Provide morning milk to government-school students',category:'Education',status:'partial',detail:'A wide breakfast scheme delivered the nutrition goal, but with meals rather than the promised milk.',source:'Official breakfast scheme',url:'https://www.tnsocialwelfare.tn.gov.in/en/specilisationsnutritious-meal-programme/chief-ministers-breakfast-scheme'},
-      {gov:'dmk',title:'Provide a ₹4 lakh subsidy for rural concrete houses',category:'Housing',status:'partial',detail:'Housing programmes are active, but the exact promised subsidy and completed scale are not fully verified.',source:'Rural Development Dept',url:'https://www.tnrd.gov.in/'},
-      {gov:'dmk',title:'Restore the old pension scheme',category:'Government staff',status:'partial',detail:'An assured-pension alternative was announced, but it is not a literal restoration of OPS.',source:'DMK scorecard evidence',url:'https://ssriramhere.github.io/dmk-scorecard/'},
-      {gov:'dmk',title:'Pay ₹4,000 COVID relief to rice-card holders',category:'Welfare',status:'done',detail:'The relief was paid in two ₹2,000 instalments in June 2021.',source:'DMK scorecard evidence',url:'https://ssriramhere.github.io/dmk-scorecard/'},
-      {gov:'dmk',title:'Subsidise each LPG cylinder by ₹100',category:'Household costs',status:'not',detail:'No consistent state programme matching the promise could be verified.',source:'DMK scorecard evidence',url:'https://ssriramhere.github.io/dmk-scorecard/'},
-      {gov:'dmk',title:'Cut petrol by ₹5 and diesel by ₹4 per litre',category:'Household costs',status:'partial',detail:'Petrol tax was cut by roughly ₹3 per litre; the promised reductions were not delivered in full.',source:'DMK scorecard evidence',url:'https://ssriramhere.github.io/dmk-scorecard/'},
-      {gov:'dmk',title:'Provide free bus travel for residents aged 70+',category:'Seniors',status:'not',detail:'No distinct statewide senior-specific free-travel scheme was verified.',source:'TN Transport Dept',url:'https://www.tntransport.gov.in/'},
-      {gov:'dmk',title:'Add 20,000 MW of renewable generation',category:'Energy',status:'not',detail:'The term-bounded 20,000 MW addition is not verified against official capacity data.',source:'Central Electricity Authority',url:'https://cea.nic.in/installed-capacity-report/'},
-      {gov:'dmk',title:'Reserve 75% of private-sector jobs for Tamil Nadu residents',category:'Jobs',status:'not',detail:'No state law implementing the reservation was enacted.',source:'DMK scorecard evidence',url:'https://ssriramhere.github.io/dmk-scorecard/'},
-      {gov:'dmk',title:'Achieve 100% literacy within three years',category:'Education',status:'not',detail:'No official declaration or independent indicator shows that the target was reached.',source:'DMK scorecard evidence',url:'https://ssriramhere.github.io/dmk-scorecard/'},
-      {gov:'dmk',title:'Waive farm and jewellery loans for small and medium farmers',category:'Agriculture',status:'partial',detail:'Waivers were implemented through cooperatives, but universal promised coverage is not fully established.',source:'DMK scorecard evidence',url:'https://ssriramhere.github.io/dmk-scorecard/'},
-      {gov:'dmk',title:'Raise paddy MSP to ₹2,500 and sugarcane to ₹4,000',category:'Agriculture',status:'partial',detail:'State incentives brought paddy close to the target, but the stated rates were not fully met.',source:'Agriculture Dept',url:'https://www.tn.gov.in/department/2'},
-      {gov:'dmk',title:'Extend NREGA to 150 days with a ₹300 daily wage',category:'Jobs',status:'not',detail:'The national scheme remained below the promised statewide duration and wage.',source:'NREGA portal',url:'https://nrega.nic.in/'},
-      {gov:'dmk',title:'Raise women’s reservation in government jobs from 30% to 40%',category:'Women',status:'not',detail:'A statewide order applying the exact 40% commitment across government jobs was not verified.',source:'TNPSC',url:'https://www.tnpsc.gov.in/'},
-      {gov:'dmk',title:'Install free sanitary-napkin vending machines in schools and colleges',category:'Women',status:'partial',detail:'Free provision continues and some machines were installed, but a universal rollout was not completed.',source:'Health Dept',url:'https://www.tnhealth.tn.gov.in/'}
-    ];
-
-    const labels = {done:'Completed', partial:'Partial', not:'Not completed'};
+    const labels = {done:'Completed', partial:'Partial', not:'Not completed', unverified:'Unverified'};
+    const descriptions = {
+      done: 'Evidence indicates the promised outcome was delivered at or beyond the stated scope.',
+      partial: 'Action or delivery occurred, but the outcome, wording or scale remains incomplete.',
+      not: 'No delivery matching the stated promise was established by the end of the term.',
+      unverified: 'The promise is in the manifesto, but available public evidence is insufficient for a firm grade.'
+    };
     const list = document.querySelector('#promiseList');
     const empty = document.querySelector('#empty');
     const resultCount = document.querySelector('#resultCount');
@@ -289,7 +257,7 @@
     function render() {
       const [search, government, status] = controls.map(control => control.value.toLowerCase());
       const visible = promises.filter(item => {
-        const text = `${item.title} ${item.category} ${item.detail}`.toLowerCase();
+        const text = `${item.title} ${item.category} ${descriptions[item.status]}`.toLowerCase();
         return (!search || text.includes(search)) && (government === 'all' || item.gov === government) && (status === 'all' || item.status === status);
       });
 
@@ -297,10 +265,10 @@
         const index = promises.filter(p => p.gov === item.gov).indexOf(item) + 1;
         const govLabel = item.gov === 'aiadmk' ? 'AIADMK · 2016' : 'DMK · 2021';
         return `<article class="promise">
-          <div class="promise-index">${String(index).padStart(2,'0')}/20</div>
+          <div class="promise-index">${String(index).padStart(3,'0')}/100</div>
           <div>
             <h3>${item.title}</h3>
-            <p>${item.detail}</p>
+            <p>${descriptions[item.status]}</p>
             <div class="meta"><span class="tag gov-tag ${item.gov}">${govLabel}</span><span class="tag">${item.category}</span><a class="source" href="${item.url}" target="_blank" rel="noreferrer">${item.source} ↗</a></div>
           </div>
           <div class="status ${item.status}">${labels[item.status]}</div>
@@ -308,10 +276,28 @@
       }).join('');
 
       empty.style.display = visible.length ? 'none' : 'block';
-      resultCount.textContent = visible.length === 40 ? 'Showing all 40 promises' : `Showing ${visible.length} of 40 promises`;
+      resultCount.textContent = visible.length === 200 ? 'Showing all 200 promises' : `Showing ${visible.length} of 200 promises`;
+    }
+
+    function fillSummary(gov) {
+      const rows = promises.filter(item => item.gov === gov);
+      const counts = Object.fromEntries(['done','partial','not','unverified'].map(key => [key, rows.filter(item => item.status === key).length]));
+      const percent = Math.round((counts.done / rows.length) * 100);
+      document.querySelector('#' + gov + 'Score').innerHTML = percent + '<small>%</small>';
+      document.querySelector('#' + gov + 'ScoreLabel').textContent = counts.done + ' of ' + rows.length + ' fully completed';
+      const meter = document.querySelector('#' + gov + 'Meter');
+      meter.style.setProperty('--score', percent + '%');
+      meter.parentElement.setAttribute('aria-label', percent + ' percent complete');
+      document.querySelector('#' + gov + 'Tally').innerHTML =
+        '<span><b>' + counts.done + '</b> completed</span>' +
+        '<span><b>' + counts.partial + '</b> partial</span>' +
+        '<span><b>' + counts.not + '</b> not completed</span>' +
+        '<span><b>' + counts.unverified + '</b> unverified</span>';
     }
 
     controls.forEach(control => control.addEventListener(control.tagName === 'INPUT' ? 'input' : 'change', render));
+    fillSummary('aiadmk');
+    fillSummary('dmk');
     render();
   </script>
 </body>
